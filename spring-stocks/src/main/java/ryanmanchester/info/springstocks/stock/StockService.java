@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -34,17 +35,18 @@ public class StockService {
 		
 	}
 	
+	@Cacheable("stockDataCache")
 	public Stock mapApiToStock() {
 		Stock stock = restTemplate.getForObject(url, Stock.class);
 		addStock(stock);
 		return stock;
-		
 	}
 	
 	public void addStock(Stock stock) {
 		stocks.add(stock);
 	}
 	
+	@Cacheable("stockDataCache")
 	public List<Stock> findAllStocks() {
 		return stocks;
 	}
@@ -52,5 +54,4 @@ public class StockService {
 	public Stock findFirstStock(String symbol) {
 		return stocks.stream().filter(stock -> stock.getSymbol().equals(symbol)).findFirst().orElse(null);
 	}
-
 }
