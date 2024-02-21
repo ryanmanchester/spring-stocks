@@ -1,5 +1,7 @@
 package ryanmanchester.info.springstocks.stock;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +22,13 @@ public class StockController {
 		return stockService.getStockData();
 	}
 	
-	@GetMapping("/demo-stock")
-	public Stock getDemoStock() {
+	@GetMapping("/add-stock")
+	public Stock addDemoStock() {
 		return stockService.mapApiToStock();
+	}
+	
+	@GetMapping("list-stocks")
+	public List<Stock> getAllStocs() {
+		return stockService.findAllStocks();
 	}
 }

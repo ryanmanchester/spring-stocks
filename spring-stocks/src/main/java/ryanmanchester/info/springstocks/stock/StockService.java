@@ -1,5 +1,8 @@
 package ryanmanchester.info.springstocks.stock;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +20,8 @@ public class StockService {
 	private final RestTemplate restTemplate;
 	private final String url =  "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=IBM&apikey=demo";
 	
+	private static List<Stock> stocks = new ArrayList<>();
+	
 	public StockService(RestTemplateBuilder restTemplateBuilder) {
 		this.restTemplate = restTemplateBuilder.build();
 	}
@@ -30,7 +35,18 @@ public class StockService {
 	}
 	
 	public Stock mapApiToStock() {
-		return restTemplate.getForObject(url, Stock.class);
+		Stock stock = restTemplate.getForObject(url, Stock.class);
+		addStock(stock);
+		return stock;
+		
+	}
+	
+	public void addStock(Stock stock) {
+		stocks.add(stock);
+	}
+	
+	public List<Stock> findAllStocks() {
+		return stocks;
 	}
 
 }
