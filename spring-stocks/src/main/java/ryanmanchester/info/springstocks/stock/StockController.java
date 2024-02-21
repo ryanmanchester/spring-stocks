@@ -19,4 +19,9 @@ public class StockController {
 	public String getStockData() {
 		return stockService.getStockData();
 	}
+	
+	@GetMapping("/demo-stock")
+	public Stock getDemoStock() {
+		return stockService.mapApiToStock();
+	}
 }

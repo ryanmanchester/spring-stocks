@@ -15,17 +15,22 @@ public class StockService {
 	private String alphaVantageBaseUrl;
 	
 	private final RestTemplate restTemplate;
+	private final String url =  "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=IBM&apikey=demo";
 	
 	public StockService(RestTemplateBuilder restTemplateBuilder) {
 		this.restTemplate = restTemplateBuilder.build();
 	}
 	
 	public String getStockData() {
-		String url = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=IBM&apikey=YJ1XL5ED0S91Q96A";
-		return restTemplate.getForObject(url, String.class);
+		//String url =alphaVantageBaseUrl + "?function=GLOBAL_QUOTE&symbol=IBM&apikey=" + alphaVantageApiKey;
+		
+		 return restTemplate.getForObject(url, String.class);
 		
 		
-		
+	}
+	
+	public Stock mapApiToStock() {
+		return restTemplate.getForObject(url, Stock.class);
 	}
 
 }
