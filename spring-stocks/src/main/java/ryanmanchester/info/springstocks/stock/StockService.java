@@ -2,6 +2,7 @@ package ryanmanchester.info.springstocks.stock;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -19,16 +20,12 @@ public class StockService {
 		this.restTemplate = restTemplateBuilder.build();
 	}
 	
-	public Stock getStockData(String symbol) {
-		String url = alphaVantageBaseUrl + "?function=GLOBAL_QUOTES$symbol="+symbol+"&apikey=" +alphaVantageApiKey;
-		try {
-			Stock stockData = restTemplate.getForObject(url, Stock.class);
-			return stockData;
-			
-		}catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		return null;
+	public String getStockData() {
+		String url = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=IBM&apikey=YJ1XL5ED0S91Q96A";
+		return restTemplate.getForObject(url, String.class);
+		
+		
+		
 	}
 
 }
