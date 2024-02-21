@@ -28,7 +28,11 @@ public class StockController {
 	}
 	
 	@GetMapping("list-stocks")
-	public List<Stock> getAllStocs() {
+	public List<Stock> getAllStocks() {
 		return stockService.findAllStocks();
+	}
+	@GetMapping("list-stocks/{symbol}")
+	public Stock findFirstStock(@PathVariable String symbol) {
+		return stockService.findFirstStock(symbol);
 	}
 }

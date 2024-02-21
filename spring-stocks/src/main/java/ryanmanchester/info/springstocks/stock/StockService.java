@@ -48,5 +48,9 @@ public class StockService {
 	public List<Stock> findAllStocks() {
 		return stocks;
 	}
+	
+	public Stock findFirstStock(String symbol) {
+		return stocks.stream().filter(stock -> stock.getSymbol().equals(symbol)).findFirst().orElse(null);
+	}
 
 }
