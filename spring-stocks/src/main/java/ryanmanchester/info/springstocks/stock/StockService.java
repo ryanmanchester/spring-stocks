@@ -42,6 +42,10 @@ public class StockService {
 		return stockRepository.save(stock);
 		
 	}
+	
+	public List<Stock> findAllStocks() {
+		return stockRepository.findAll();
+	}
 }
 	
 	
