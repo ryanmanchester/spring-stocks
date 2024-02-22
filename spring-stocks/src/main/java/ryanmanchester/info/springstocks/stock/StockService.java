@@ -46,6 +46,14 @@ public class StockService {
 	public List<Stock> findAllStocks() {
 		return stockRepository.findAll();
 	}
+	
+	public Stock displayStockSymbol(String symbol) {
+		return stockRepository.findAll().stream()
+							  .filter(stock -> stock.getSymbol()
+							  .equals(symbol))
+							  .findFirst()
+							  .get();
+	}
 }
 	
 	
