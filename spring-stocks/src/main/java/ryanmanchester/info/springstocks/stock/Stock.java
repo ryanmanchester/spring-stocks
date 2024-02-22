@@ -4,8 +4,13 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 @JsonRootName("Global Quote")
 public class Stock {
+	@Id
 	@JsonProperty("01. symbol")
 	private String symbol;
 	
@@ -36,6 +41,9 @@ public class Stock {
 	@JsonProperty("10. change percent")
 	private String changePercent;
 	
+	public Stock() {
+		
+	}
 	
 	@JsonCreator
 	public Stock(String symbol, String open, String high, String low, String price, String volume, String latestTradingDay,

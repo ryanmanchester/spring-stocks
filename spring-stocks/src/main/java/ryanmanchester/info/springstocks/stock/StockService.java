@@ -21,10 +21,11 @@ public class StockService {
 	private final RestTemplate restTemplate;
 	private final String url =  "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=IBM&apikey=demo";
 	
-	private static List<Stock> stocks = new ArrayList<>();
+	private final StockRepository stockRepository;
 	
-	public StockService(RestTemplateBuilder restTemplateBuilder) {
+	public StockService(RestTemplateBuilder restTemplateBuilder, StockRepository stockRepository) {
 		this.restTemplate = restTemplateBuilder.build();
+		this.stockRepository = stockRepository;
 	}
 	
 	public String getStockData() {
@@ -35,23 +36,15 @@ public class StockService {
 		
 	}
 	
-	@Cacheable("stockDataCache")
-	public Stock mapApiToStock() {
+	
+	public Stock fetchAndSaveDemoStock() {
 		Stock stock = restTemplate.getForObject(url, Stock.class);
-		addStock(stock);
-		return stock;
-	}
-	
-	public void addStock(Stock stock) {
-		stocks.add(stock);
-	}
-	
-	@Cacheable("stockDataCache")
-	public List<Stock> findAllStocks() {
-		return stocks;
-	}
-	
-	public Stock findFirstStock(String symbol) {
-		return stocks.stream().filter(stock -> stock.getSymbol().equals(symbol)).findFirst().orElse(null);
+		return stockRepository.save(stock);
+		
 	}
 }
+	
+	
+
+	
+
